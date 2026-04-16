@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SES – Fiches de révision</title>
+<style>
+:root{
+  --bg:#07070f;--surf:#0f0f1b;--card:#14142a;--bord:#1f1f3a;
+  --txt:#e8e8f4;--muted:#6060a0;
+  --eco:#818cf8;--pol:#f472b6;--soc:#2dd4bf;--rg:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:system-ui,sans-serif;min-height:100vh;}
+
+/* NAV */
+nav{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.2rem;
+  background:rgba(10,10,20,.96);border-bottom:1px solid var(--bord);
+  position:sticky;top:0;z-index:99;backdrop-filter:blur(12px);flex-wrap:wrap;}
+nav .logo{font-weight:800;font-size:1rem;margin-right:.5rem;
+  background:linear-gradient(135deg,var(--eco),var(--pol));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nb{padding:.35rem .85rem;border-radius:.45rem;cursor:pointer;font-size:.78rem;
+  font-weight:600;border:1px solid transparent;background:none;
+  color:var(--muted);transition:.15s;white-space:nowrap;}
+.nb:hover{color:var(--txt);}
+.nb.eco{color:var(--eco);}.nb.pol{color:var(--pol);}.nb.soc{color:var(--soc);}.nb.rg{color:var(--rg);}
+.nb.on{border-color:currentColor;}
+
+/* LAYOUT */
+.wrap{display:flex;min-height:calc(100vh - 47px);}
+aside{width:240px;background:var(--surf);border-right:1px solid var(--bord);
+  padding:.75rem;overflow-y:auto;position:sticky;top:47px;
+  max-height:calc(100vh - 47px);scrollbar-width:thin;}
+.sb-h{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--muted);padding:.5rem .5rem .25rem;font-weight:700;}
+.sb-i{display:block;padding:.4rem .65rem;border-radius:.4rem;cursor:pointer;
+  font-size:.8rem;color:var(--muted);border-left:2px solid transparent;
+  transition:.12s;margin:.08rem 0;}
+.sb-i:hover{background:var(--card);color:var(--txt);}
+.sb-i.on{background:var(--card);color:var(--txt);border-left-color:currentColor;}
+
+/* MAIN */
+main{flex:1;padding:1.8rem 2rem;max-width:840px;overflow-y:auto;}
+.ch{display:none;}.ch.on{display:block;}
+
+/* CHAPTER HEADER */
+.badge{display:inline-block;padding:.18rem .65rem;border-radius:999px;
+  font-size:.68rem;font-weight:700;margin-bottom:.6rem;letter-spacing:.03em;}
+h2.title{font-size:1.45rem;font-weight:800;margin-bottom:.45rem;letter-spacing:-.02em;}
+.summary{color:var(--muted);font-size:.87rem;line-height:1.7;
+  border-left:3px solid var(--bord);padding-left:.9rem;margin-bottom:1.8rem;}
+
+/* SECTION */
+.sec{margin:1.6rem 0;}
+.sec-h{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--muted);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;}
+.sec-h::after{content:'';flex:1;height:1px;background:var(--bord);}
+
+/* CARDS */
+.d{background:linear-gradient(135deg,rgba(99,102,241,.09),rgba(168,85,247,.06));
+  border:1px solid rgba(99,102,241,.22);border-radius:.75rem;padding:1rem 1.1rem;margin:.5rem 0;}
+.d .dt{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#a5b4fc;margin-bottom:.2rem;}
+.d .dw{font-size:.95rem;font-weight:700;color:#c7d2fe;margin-bottom:.3rem;}
+.d .dd{font-size:.83rem;color:#a5b4fc;line-height:1.65;}
+
+.k{background:var(--card);border:1px solid var(--bord);border-radius:.75rem;
+  padding:.9rem 1rem;margin:.5rem 0;}
+.k h4{font-size:.87rem;font-weight:700;margin-bottom:.35rem;}
+.k p,.k li{font-size:.82rem;color:var(--muted);line-height:1.7;}
+.k ul{padding-left:1rem;}.k li{margin:.1rem 0;}
+.k li strong,.k p strong{color:var(--txt);}
+.form{font-family:monospace;font-size:.84rem;
+  background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.18);
+  border-radius:.45rem;padding:.5rem .9rem;margin:.3rem 0;color:#c7d2fe;text-align:center;}
+
+.e{background:rgba(45,212,191,.06);border:1px solid rgba(45,212,191,.18);
+  border-radius:.75rem;padding:.85rem 1rem;margin:.5rem 0;}
+.e .et{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#5eead4;margin-bottom:.2rem;}
+.e .ed{font-size:.82rem;color:#99f6e4;line-height:1.65;}
+
+.w{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.18);
+  border-radius:.75rem;padding:.85rem 1rem;margin:.5rem 0;}
+.w .wt{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#fde68a;margin-bottom:.2rem;}
+.w .wd{font-size:.82rem;color:#fde68a;line-height:1.65;}
+
+.tp{background:rgba(244,114,182,.05);border:1px solid rgba(244,114,182,.18);
+  border-radius:.75rem;padding:.85rem 1rem;margin:.5rem 0;}
+.tp .tpt{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#f9a8d4;margin-bottom:.2rem;}
+.tp .tpd{font-size:.82rem;color:#f9a8d4;line-height:1.65;}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+@media(max-width:650px){.g2{grid-template-columns:1fr;}aside{display:none;}main{padding:1rem;}}
+
+/* HOME */
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.9rem;margin-top:1.2rem;}
+.hc{background:var(--card);border:1px solid var(--bord);border-radius:.9rem;
+  padding:1.2rem;cursor:pointer;transition:.18s;}
+.hc:hover{transform:translateY(-3px);}
+.hc .hi{font-size:1.9rem;margin-bottom:.5rem;}
+.hc .hn{font-size:.88rem;font-weight:700;margin-bottom:.2rem;}
+.hc .hs{font-size:.74rem;color:var(--muted);}
+.hc.eco{border-color:rgba(129,140,248,.28);}.hc.eco .hn{color:var(--eco);}
+.hc.pol{border-color:rgba(244,114,182,.28);}.hc.pol .hn{color:var(--pol);}
+.hc.soc{border-color:rgba(45,212,191,.28);} .hc.soc .hn{color:var(--soc);}
+.hc.rg {border-color:rgba(251,191,36,.28);} .hc.rg  .hn{color:var(--rg);}
+</style>
+</head>
+<body>
+<nav>
+  <span class="logo">SES</span>
+  <button class="nb eco on" onclick="theme('eco',this)">📈 Économie</button>
+  <button class="nb pol"    onclick="theme('pol',this)">🗳️ Politique</button>
+  <button class="nb soc"    onclick="theme('soc',this)">👥 Social</button>
+  <button class="nb rg"     onclick="theme('rg',this)">🔗 Regards croisés</button>
+</nav>
+<div class="wrap">
+<aside id="sb"></aside>
+<main id="main">
+
+<!-- ══ HOME ══ -->
+<div class="ch on" id="ch-home">
+  <h2 class="title">📚 Fiches de révision SES</h2>
+  <p class="summary">12 chapitres complets — définitions, mécanismes, exemples, pièges. Clique sur une fiche pour commencer.</p>
+  <div class="hgrid">
+    <div class="hc eco" onclick="go('eco0')"><div class="hi">🛡️</div><div class="hn">Risques &amp; Protection sociale</div><div class="hs">Mutualisation · Assurance · Assistance</div></div>
+    <div class="hc eco" onclick="go('eco1')"><div class="hi">💰</div><div class="hn">Financement des agents</div><div class="hs">Crédit · Actions · Obligations</div></div>
+    <div class="hc eco" onclick="go('eco2')"><div class="hi">🏭</div><div class="hn">Marchés imparfaits</div><div class="hs">Monopole · Oligopole · Ententes</div></div>
+    <div class="hc eco" onclick="go('eco3')"><div class="hi">💶</div><div class="hn">Monnaie &amp; Création monétaire</div><div class="hs">BCE · Crédits font les dépôts</div></div>
+    <div class="hc eco" onclick="go('eco4')"><div class="hi">📊</div><div class="hn">Marché concurrentiel</div><div class="hs">Offre · Demande · Surplus</div></div>
+    <div class="hc eco" onclick="go('eco5')"><div class="hi">⚠️</div><div class="hn">Défaillances du marché</div><div class="hs">Externalités · Biens collectifs</div></div>
+    <div class="hc pol" onclick="go('pol0')"><div class="hi">🗳️</div><div class="hn">Voter : individuel ou collectif ?</div><div class="hs">Abstention · Volatilité · Columbia</div></div>
+    <div class="hc pol" onclick="go('pol1')"><div class="hi">📣</div><div class="hn">Opinion publique</div><div class="hs">Sondages · Bourdieu · Démocratie d'opinion</div></div>
+    <div class="hc soc" onclick="go('soc0')"><div class="hi">🚫</div><div class="hn">Déviance &amp; Contrôle social</div><div class="hs">Becker · Étiquetage · Chiffre noir</div></div>
+    <div class="hc soc" onclick="go('soc1')"><div class="hi">🤝</div><div class="hn">Liens sociaux &amp; Cohésion</div><div class="hs">Durkheim · Paugam · Désaffiliation</div></div>
+    <div class="hc soc" onclick="go('soc2')"><div class="hi">👶</div><div class="hn">Socialisation</div><div class="hs">Bourdieu · Genre · Reproduction</div></div>
+    <div class="hc rg"  onclick="go('rg0')"><div class="hi">🔗</div><div class="hn">Regards Croisés &amp; Auteurs</div><div class="hs">Ponts interdisciplinaires · Méthode</div></div>
+  </div>
+</div>
+
+<!-- ══ ECO 0 — RISQUES ══ -->
+<div class="ch" id="ch-eco0">
+<span class="badge" style="background:rgba(129,140,248,.15);color:var(--eco)">📈 Sciences Économiques</span>
+<h2 class="title" style="color:var(--eco)">Risques, Assurance &amp; Protection sociale</h2>
+<p class="summary">Les risques sociaux (maladie, vieillesse, chômage, accident) sont gérés collectivement via la mutualisation privée et la protection sociale publique. Deux logiques : assurance (cotisations) et assistance (redistribution verticale).</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Risque social</div><div class="dd">Événement pouvant survenir, provoquant une dégradation des conditions de vie d'un individu et nécessitant une prise en charge. Principaux : maladie, accident, vieillesse, chômage.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Mutualisation des risques</div><div class="dd">Partage et répartition des risques entre membres d'un groupe. Chacun verse une prime régulière ; les sinistres des uns sont couverts par les cotisations de tous.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Protection sociale</div><div class="dd">Ensemble des mécanismes de prévoyance collective permettant aux individus de faire face aux conséquences financières des risques sociaux devant lesquels ils sont inégaux.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Prestations sociales</div><div class="dd">Revenus en nature (remboursements) ou en espèces (retraite, allocations chômage) versés aux ménages confrontés à un risque couvert. ≠ cotisations sociales (ce qu'on paie).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Logique d'assurance</div><div class="dd">Protection liée à la cotisation individuelle. Seuls ceux qui ont cotisé ont droit à une indemnisation. Redistribution horizontale. Ex : allocations chômage Pôle Emploi.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Logique d'assistance</div><div class="dd">Protection sans contrepartie de cotisation, financée par l'impôt. Redistribution verticale (riches → pauvres). Ex : RSA, C2S (ex-CMU), bourses CROUS.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Aléa moral</div><div class="dd">Situation d'information asymétrique dans laquelle, APRÈS la signature d'un contrat, l'une des parties change son comportement à l'insu et au détriment de l'autre. Ex : conduire imprudemment car on est assuré.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Prévention</div><div class="dd">Ensemble des mesures destinées à empêcher un risque de se réaliser (vaccination, port de la ceinture, hygiène...). Distinct de la prise en charge après réalisation.</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Mécanismes essentiels</div>
+<div class="k"><h4>Facteurs d'exposition aux risques</h4><ul><li><strong>Âge :</strong> enfants et personnes âgées plus exposés à la maladie</li><li><strong>Niveau d'éducation :</strong> chômage touche plus les peu diplômés</li><li><strong>Métier :</strong> certains secteurs ont plus d'accidents du travail</li><li><strong>Comportement :</strong> conduites à risque (tabac, vitesse) ou prudentes</li></ul></div>
+<div class="k"><h4>Lutte contre l'aléa moral</h4><p><strong>Franchise</strong> (part du dommage à charge de l'assuré) + <strong>malus</strong> (prime plus élevée en cas de sinistre) → l'assuré garde une part du risque financier → moins enclin à prendre des risques inutiles.</p></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Mutualisation</div><div class="ed">1 000 personnes cotisent 10 € chacune (risque d'invalidité = 1‰). L'une devient invalide → reçoit 10 000 € financés par les cotisations de tous. Charge individuelle : 10 € au lieu de 10 000 €.</div></div>
+<div class="e"><div class="et">Assurance vs Assistance</div><div class="ed">Pôle Emploi (assurance) → il faut avoir cotisé. RSA (assistance) → versé sans condition de cotisation, financé par l'impôt.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège n°1</div><div class="wd">Ne pas confondre <strong>cotisations</strong> (ce que je paie) et <strong>prestations</strong> (ce que je reçois). Ce sont deux choses opposées !</div></div>
+<div class="w"><div class="wt">Piège n°2</div><div class="wd">Aléa moral = APRÈS le contrat. Sélection adverse = AVANT. Ne jamais les inverser !</div></div>
+</div>
+</div>
+
+<!-- ══ ECO 1 — FINANCEMENT ══ -->
+<div class="ch" id="ch-eco1">
+<span class="badge" style="background:rgba(129,140,248,.15);color:var(--eco)">📈 Sciences Économiques</span>
+<h2 class="title" style="color:var(--eco)">Financement des agents économiques</h2>
+<p class="summary">Les agents (ménages, entreprises, État) ont des besoins ou capacités de financement. Financement interne (autofinancement), externe indirect (banque) ou externe direct (marchés financiers). L'État se finance par l'impôt et l'emprunt obligataire.</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Besoin / Capacité de financement</div><div class="dd"><strong>Besoin :</strong> revenus &lt; dépenses → trouver des ressources externes. <strong>Capacité :</strong> revenus &gt; dépenses → peut prêter ses ressources. Généralement les ménages épargnent (capacité) et les entreprises/État empruntent (besoin).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Taux d'intérêt</div><div class="dd">Prix d'équilibre sur le marché des fonds prêtables. Rémunère le prêteur et représente le coût du crédit pour l'emprunteur. Se fixe selon la loi de l'offre et de la demande.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Autofinancement</div><div class="dd">Financement des dépenses par la propre épargne de l'entreprise (EBE – dividendes – intérêts – impôts). Sans recours à des acteurs externes.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Action</div><div class="dd">Titre de <strong>propriété</strong> d'une partie du capital d'une entreprise. L'actionnaire reçoit des dividendes. Pas de remboursement garanti.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Obligation</div><div class="dd">Titre de <strong>créance</strong>. L'acheteur prête une somme → reçoit des intérêts + remboursement. Le porteur n'est pas propriétaire. Émise par entreprises ou États.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Financement indirect</div><div class="dd">Via des banques qui collectent l'épargne et accordent des crédits. Utilisé surtout par les PME. ≠ financement direct (marchés financiers, sans intermédiaire).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Effet d'éviction</div><div class="dd">L'État émet massivement des obligations → attire les investisseurs (titres jugés sûrs) au détriment des entreprises privées → taux d'intérêt montent → investissement privé chute.</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔢 Formules</div>
+<div class="k">
+<div class="form">Épargne ménage = Revenu disponible − Consommations</div>
+<div class="form">Revenu disponible = (Revenus travail + propriété) + Aides sociales − Prélèvements obligatoires</div>
+<div class="form">EBE = Chiffre d'affaires − Consommations intermédiaires − Salaires − Impôts production</div>
+<div class="form">Épargne entreprise = EBE − (Intérêts + Dividendes + Impôts sur bénéfices)</div>
+<div class="form">Solde budgétaire = Recettes État − Dépenses État</div>
+</div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Exemple</div><div class="ed">Les <strong>Treasury Bonds</strong> américains = obligations d'État. Apple ou Total émettent des actions en bourse = financement externe direct. Un artisan emprunte à sa banque = financement indirect.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège crucial</div><div class="wd"><strong>Action ≠ Obligation :</strong> actionnaire = propriétaire (dividendes, pas de remboursement garanti). Obligataire = créancier (intérêts + remboursement garanti, pas propriétaire).</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Financement direct ≠ autofinancement :</strong> "direct" = marchés financiers sans banque. "Autofinancement" = épargne propre de l'entreprise sans aucun acteur externe.</div></div>
+</div>
+</div>
+
+<!-- ══ ECO 2 — MARCHÉS IMPARFAITS ══ -->
+<div class="ch" id="ch-eco2">
+<span class="badge" style="background:rgba(129,140,248,.15);color:var(--eco)">📈 Sciences Économiques</span>
+<h2 class="title" style="color:var(--eco)">Marchés imparfaitement concurrentiels</h2>
+<p class="summary">La plupart des marchés réels sont imparfaits. Les entreprises disposent d'un pouvoir de marché (monopole, oligopole, concurrence monopolistique) et développent des stratégies que l'État régule.</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Pouvoir de marché</div><div class="dd">Capacité d'une entreprise à influencer le prix du marché et à le fixer au-dessus du niveau d'équilibre concurrentiel. Lié au nombre réduit d'offreurs et aux barrières à l'entrée.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Monopole</div><div class="dd">Un seul offreur face à de nombreux demandeurs. Types : <strong>naturel</strong> (coûts fixes élevés), <strong>légal</strong> (réglementation), <strong>innovation</strong> (brevet), <strong>géographique</strong> (isolement).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Oligopole</div><div class="dd">Petit nombre d'offreurs face à de nombreux acheteurs. Les entreprises sont interdépendantes. Tentation de former un cartel.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Concurrence monopolistique</div><div class="dd">Nombreuses entreprises qui différencient fortement leurs produits (marque, qualité, design) → chacune dispose d'un quasi-monopole sur son propre produit. Ex : restauration, vêtements.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Entente (cartel)</div><div class="dd">Accord ILLÉGAL entre concurrents pour réduire la concurrence (prix communs, répartition des marchés). Interdit par le droit européen.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Concentration horizontale / verticale</div><div class="dd"><strong>Horizontale :</strong> rachat d'entreprises dans le même secteur (ex : Carrefour rachète Champion). <strong>Verticale :</strong> rachat d'entreprises à différentes étapes de production (ex : Intermarché = supermarchés + pêcheries + transport).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Abus de position dominante</div><div class="dd">Utiliser son pouvoir de marché pour restreindre la concurrence. INTERDIT. Ex : prix prédateurs (vendre à perte pour éliminer les concurrents).</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Mécanismes</div>
+<div class="k"><h4>Monopole et perte de surplus</h4><p>Monopoleur = faiseur de prix → fixe prix Pm &gt; Pe, produit Qm &lt; Qe. Résultat : une partie du surplus du consommateur est transférée au producteur + perte sèche totale pour la société.</p></div>
+<div class="k"><h4>Dilemme du prisonnier en oligopole</h4><p>Stratégies rationnelles individuellement (baisser les prix) → résultat collectif sous-optimal pour toutes les entreprises. D'où la tentation illégale du cartel.</p></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Monopoles</div><div class="ed">Naturel : SNCF sur les rails. Légal : La Française des Jeux. Innovation : Microsoft sur les OS.</div></div>
+<div class="e"><div class="et">Entente condamnée</div><div class="ed">2005 : Orange, SFR et Bouygues condamnés pour entente sur les prix de leurs abonnements mobiles.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège</div><div class="wd">Le monopole n'est <strong>pas toujours illégal</strong> : monopole naturel (SNCF) ou légal (FDJ) sont autorisés. Seul l'<strong>abus</strong> de position dominante est interdit.</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Oligopole ≠ entente :</strong> dans un oligopole, les entreprises peuvent se faire concurrence (stratégies non coopératives). L'entente est un accord explicite et illégal.</div></div>
+</div>
+</div>
+
+<!-- ══ ECO 3 — MONNAIE ══ -->
+<div class="ch" id="ch-eco3">
+<span class="badge" style="background:rgba(129,140,248,.15);color:var(--eco)">📈 Sciences Économiques</span>
+<h2 class="title" style="color:var(--eco)">Monnaie &amp; Création monétaire</h2>
+<p class="summary">La monnaie remplit 3 fonctions. Deux formes : fiduciaire (pièces/billets) et scripturale (dépôts bancaires). Les banques créent la monnaie par le crédit ("les crédits font les dépôts"). La BCE régule la masse monétaire via les taux directeurs.</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Monnaie fiduciaire</div><div class="dd">Pièces et billets. Valeur faciale très supérieure à la valeur intrinsèque. "Fiduciaire" = confiance (latin fides). Créée par la banque centrale.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Monnaie scripturale</div><div class="dd">Monnaie inscrite sur des comptes bancaires. Circule par chèque, virement, carte. Représente +80 % de la masse monétaire. Créée par les banques commerciales via le crédit.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Création monétaire</div><div class="dd">"Les crédits font les dépôts" : quand une banque accorde un prêt, elle crée ex nihilo de la monnaie scripturale en inscrivant la somme sur le compte du client. Cette monnaie disparaît lors du remboursement (destruction monétaire).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Masse monétaire</div><div class="dd">Quantité totale de monnaie détenue par les agents économiques susceptible d'être convertie en moyen de paiement. Agrégats M1 (billets+dépôts à vue), M2, M3.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Taux directeur</div><div class="dd">Taux auquel les banques commerciales se refinancent auprès de la BCE. Principal outil de politique monétaire : ↓ taux → crédit moins cher → ↑ investissement + consommation.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Inflation / Déflation</div><div class="dd"><strong>Inflation :</strong> hausse durable des prix. Caused par excès de monnaie. BCE vise &lt;2%. <strong>Déflation :</strong> baisse des prix → reporte la consommation → spirale dépressive.</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Mécanismes</div>
+<div class="k"><h4>Les 3 fonctions de la monnaie</h4><ul><li><strong>Intermédiaire des échanges :</strong> évite le problème du troc (double coïncidence des besoins)</li><li><strong>Unité de compte :</strong> mesure commune pour exprimer et comparer les prix</li><li><strong>Réserve de valeur :</strong> peut être conservée, usage différé dans le temps</li></ul></div>
+<div class="k"><h4>Limites à la création monétaire</h4><ul><li>Doivent assurer les retraits en monnaie fiduciaire</li><li>Doivent régler leurs dettes envers d'autres banques (monnaie centrale)</li><li>Réserves obligatoires à déposer auprès de la BCE</li></ul></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Création monétaire</div><div class="ed">Banque A prête 10 000 € à M. Z → inscrit 10 000 € sur son compte par simple jeu d'écriture (cette somme n'existait pas auparavant). Quand M. Z rembourse → destruction monétaire.</div></div>
+<div class="e"><div class="et">Fin de l'étalon-or</div><div class="ed">1971 : la convertibilité du dollar en or est abandonnée. Depuis, la valeur de la monnaie repose uniquement sur la confiance et la garantie de l'État.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège</div><div class="wd">La BCE ne finance <strong>PAS directement les États</strong> (interdit par les traités). Les États empruntent sur les marchés financiers en émettant des obligations.</div></div>
+</div>
+</div>
+
+<!-- ══ ECO 4 — MARCHÉ CONCURRENTIEL ══ -->
+<div class="ch" id="ch-eco4">
+<span class="badge" style="background:rgba(129,140,248,.15);color:var(--eco)">📈 Sciences Économiques</span>
+<h2 class="title" style="color:var(--eco)">Marché concurrentiel (CPP)</h2>
+<p class="summary">Le modèle théorique de concurrence pure et parfaite (CPP) aboutit à un prix d'équilibre maximisant le surplus total (consommateur + producteur). Toute perturbation (taxe, monopole) réduit ce surplus.</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Concurrence pure et parfaite (CPP)</div><div class="dd">Modèle théorique avec 5 conditions : <strong>atomicité</strong> (nombreux acteurs), <strong>homogénéité</strong> des produits, <strong>libre entrée/sortie</strong>, <strong>parfaite mobilité</strong> des facteurs, <strong>transparence</strong> de l'information. Irréaliste en pratique mais utile comme référence.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Prix d'équilibre / Preneur de prix</div><div class="dd"><strong>Prix d'équilibre :</strong> prix là où quantités offertes = quantités demandées. <strong>Preneur de prix (price taker) :</strong> en CPP, les agents acceptent le prix du marché sans pouvoir l'influencer.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Surplus du consommateur</div><div class="dd">Prix maximum que le consommateur était prêt à payer − prix d'équilibre payé. Mesure son gain à l'échange. Ex : prêt à payer 40 €, paie 30 € → surplus = 10 €.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Surplus du producteur</div><div class="dd">Prix d'équilibre reçu − prix minimum auquel le producteur était prêt à vendre. Mesure son gain à l'échange. Ex : vend à 30 €, aurait accepté 20 € → surplus = 10 €.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Coût marginal</div><div class="dd">Coût de production d'une unité supplémentaire. En CPP, le producteur maximise son profit en produisant jusqu'à ce que coût marginal = prix de marché.</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Mécanismes</div>
+<div class="k"><h4>Loi de la demande / Loi de l'offre</h4><ul><li><strong>Demande :</strong> prix ↑ → quantité demandée ↓ (courbe décroissante)</li><li><strong>Offre :</strong> prix ↑ → quantité offerte ↑ (courbe croissante = courbe de coût marginal)</li><li><strong>Équilibre :</strong> intersection des deux courbes → prix et quantité d'équilibre</li></ul></div>
+<div class="k"><h4>Effets d'une taxe forfaitaire</h4><p>Courbe d'offre ou de demande se déplace → quantités échangées ↓ + prix ↑ + surplus total ↓. La perte sèche de surplus = montant de la taxe. En CPP sans perturbation, le surplus total est maximisé.</p></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège</div><div class="wd">La CPP est un <strong>modèle théorique</strong> — dans la réalité, les marchés sont toujours imparfaits (information incomplète, différenciation des produits, barrières à l'entrée...).</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Surplus total ≠ profit :</strong> surplus total = surplus consommateur + surplus producteur. Le profit = uniquement la part du producteur.</div></div>
+</div>
+</div>
+
+<!-- ══ ECO 5 — DÉFAILLANCES ══ -->
+<div class="ch" id="ch-eco5">
+<span class="badge" style="background:rgba(129,140,248,.15);color:var(--eco)">📈 Sciences Économiques</span>
+<h2 class="title" style="color:var(--eco)">Défaillances du marché</h2>
+<p class="summary">Le marché est parfois inefficace : externalités (pollution, vaccination), biens collectifs et communs (non excluables), asymétries d'information (aléa moral APRÈS contrat, sélection adverse AVANT contrat). L'État intervient pour corriger.</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Externalité</div><div class="dd">Répercussion de l'activité économique d'un agent sur le bien-être d'un autre, SANS compensation financière. Négative (pollution) ou positive (vaccination, recherche).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Bien collectif</div><div class="dd">Non excluable (on ne peut empêcher l'accès) ET non rival (la conso de l'un ne diminue pas celle des autres). Ex : défense nationale, éclairage public, phare. → financement public nécessaire.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Bien commun</div><div class="dd">Non exclusif (accessible à tous) mais rival (la conso de l'un empêche celle d'un autre). Ex : poissons de mer. Risque : tragédie des biens communs = surexploitation → épuisement.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Passager clandestin</div><div class="dd">Individu qui profite d'un bien non excluable sans contribuer à son financement → rend impossible la production privée rentable → l'État doit financer via l'impôt.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Sélection adverse (Akerlof, 1970)</div><div class="dd">Asymétrie d'information AVANT le contrat. Vendeurs en savent plus que les acheteurs sur la qualité → acheteurs proposent un prix moyen → bons produits quittent le marché → seuls les mauvais restent ("lemons").</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Asymétrie d'information</div><div class="dd">Un acteur dispose de moins d'informations qu'un autre → inefficacités de marché → aléa moral (après contrat) ou sélection adverse (avant contrat).</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Comment corriger ?</div>
+<div class="k"><h4>Externalités négatives (pollution)</h4><ul><li><strong>Réglementation :</strong> normes, interdictions</li><li><strong>Taxe Pigouvienne :</strong> taxer le pollueur = "pollueur-payeur"</li><li><strong>Marché de quotas :</strong> UE 2005 → marché de droits à polluer pour le CO₂</li></ul></div>
+<div class="k"><h4>Sélection adverse</h4><ul><li>Certifications/labels obligatoires (contrôle technique, étiquetage des œufs)</li><li>Assurance obligatoire (assurance maladie → tout le monde s'assure)</li></ul></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Akerlof — "Market for Lemons" (1970)</div><div class="ed">Marché des voitures d'occasion : le vendeur sait si sa voiture est bonne ou un "lemon" (mauvaise voiture), pas l'acheteur. Résultat : seules les mauvaises voitures restent → le marché disparaît.</div></div>
+<div class="e"><div class="et">Bien collectif vs bien commun</div><div class="ed"><strong>Jardin public :</strong> bien collectif (non excluable + non rival). <strong>Pêche en mer :</strong> bien commun (non excluable + rival) → surpêche → épuisement des stocks.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège CRUCIAL</div><div class="wd"><strong>Aléa moral = APRÈS le contrat.</strong> <strong>Sélection adverse = AVANT le contrat.</strong> À ne jamais inverser !</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd">La <strong>vaccination</strong> est une externalité <strong>POSITIVE</strong> (immunité collective → protège aussi les non-vaccinés). L'État a intérêt à la rendre obligatoire ou à la subventionner.</div></div>
+</div>
+</div>
+
+<!-- ══ POL 0 — VOTER ══ -->
+<div class="ch" id="ch-pol0">
+<span class="badge" style="background:rgba(244,114,182,.12);color:var(--pol)">🗳️ Sciences Politiques</span>
+<h2 class="title" style="color:var(--pol)">Voter : une affaire individuelle ou collective ?</h2>
+<p class="summary">Le vote fonde la démocratie représentative. La participation baisse depuis les années 1980. Plusieurs modèles expliquent le vote : déterminants sociaux (Columbia), socialisation/identification partisane (Michigan), vote sur enjeux (approche individuelle).</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Suffrage universel</div><div class="dd">Droit de vote accordé à tous les citoyens sans condition de fortune, d'hérédité ou de capacité. France : principe à la Révolution, femmes en 1944-45, présidentielle directe en 1965.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Taux de participation / Taux d'abstention</div><div class="dd"><strong>Participation</strong> = votants / inscrits. <strong>Abstention</strong> = abstentionnistes / inscrits. Somme = 100 %. Vote blanc et vote nul sont comptés dans les VOTANTS (≠ abstention).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Abstentionnisme intermittent vs systématique</div><div class="dd"><strong>Intermittent :</strong> vote à certaines élections selon l'enjeu perçu (majorité de l'abstention). <strong>Systématique :</strong> ne vote jamais (~10-12 % des inscrits à chaque élection).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Sentiment de compétence politique</div><div class="dd">Sentiment de comprendre suffisamment la vie politique pour donner légitimement son opinion. Son absence est un facteur majeur d'abstentionnisme, corrélé au faible diplôme.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Variables lourdes (modèle de Columbia — Lazarsfeld)</div><div class="dd">Variables caractéristiques (âge, religion, PCS, genre, lieu) les plus prédictives du vote. Citation : <em>"Un individu pense politiquement comme il est socialement."</em></div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Identification partisane (paradigme de Michigan)</div><div class="dd">Attachement affectif durable à un parti politique, acquis par la socialisation. Plus déterminant que les positions programmatiques selon ce modèle.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Vote sur enjeux</div><div class="dd">L'électeur choisit en fonction des positions des candidats sur les questions politiques du moment et du contexte particulier de chaque élection. Approche individualiste et situationnelle.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Volatilité électorale</div><div class="dd">Changement de comportement électoral entre deux élections (changement de parti ou alternance vote/abstention). En hausse depuis les années 1980 → déclin des variables lourdes.</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Mécanismes</div>
+<div class="k"><h4>Facteurs structurels de l'abstentionnisme</h4><ul><li><strong>Diplôme :</strong> plus on est diplômé, plus on vote</li><li><strong>Âge :</strong> jeunes et très âgés s'abstiennent plus</li><li><strong>Emploi :</strong> chômeurs et précaires s'abstiennent davantage</li><li><strong>Lieu :</strong> abstention plus forte en milieu urbain</li></ul></div>
+<div class="k"><h4>Causes de la montée de la volatilité électorale</h4><ul><li>Désindustrialisation → disparition de l'identité ouvrière</li><li>Hausse du niveau de diplôme → plus d'autonomie dans les choix</li><li>Identités sociales complexes et multiples (Lahire)</li><li>Déclin de l'identification partisane → montée du vote sur enjeux</li></ul></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Chiffres clés</div>
+<div class="e"><div class="et">2017 présidentielle 2e tour</div><div class="ed">74,6 % de participation = 25,4 % d'abstention. Plus de 4 millions de votes blancs ou nuls (12 % des votants). En 2018 : 88 % des majeurs français inscrits sur les listes.</div></div>
+<div class="e"><div class="et">Siegfried (1913)</div><div class="ed"><em>"Le granit vote à droite et le calcaire vote à gauche"</em> → illustration classique des déterminants géographiques et sociologiques du vote (variables lourdes).</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Vote blanc ≠ abstention :</strong> le vote blanc EST compté dans le taux de participation. L'abstentionniste n'exprime rien officiellement.</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Columbia ≠ Michigan :</strong> Columbia = variables socioéconomiques objectives. Michigan = attachement subjectif/affectif à un parti via la socialisation.</div></div>
+</div>
+</div>
+
+<!-- ══ POL 1 — OPINION PUBLIQUE ══ -->
+<div class="ch" id="ch-pol1">
+<span class="badge" style="background:rgba(244,114,182,.12);color:var(--pol)">🗳️ Sciences Politiques</span>
+<h2 class="title" style="color:var(--pol)">Formation &amp; Expression de l'opinion publique</h2>
+<p class="summary">L'opinion publique émerge au XVIIIe siècle et se mesure via les sondages depuis les années 1930. Critiqués par Bourdieu (1973) pour "fabriquer" plutôt que mesurer l'opinion, les sondages et médias créent une "démocratie d'opinion".</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Opinion publique</div><div class="dd">Ensemble des idées et convictions partagées dans une société, véhiculées par les médias. À la fois opinion <em>du public</em> (population) et opinion <em>rendue publique</em> (diffusée via les médias).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Sondage d'opinion</div><div class="dd">Enquête statistique visant à déterminer les opinions probables d'une population à partir d'un échantillon représentatif (~1 000-2 000 personnes, méthode des quotas).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Marge d'erreur</div><div class="dd">Intervalle dans lequel la vraie valeur se trouve avec 95 % de certitude. Ex : 50 % ± 3 % → la vraie valeur est entre 47 % et 53 %. Plus l'échantillon est grand, plus la marge est faible.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Biais de désirabilité</div><div class="dd">Les répondants donnent une réponse valorisée socialement plutôt que leur vraie opinion. Plus fort en face à face. Ex : vote FN souvent sous-estimé dans les sondages téléphoniques.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Démocratie d'opinion</div><div class="dd">Forme de démocratie marquée par l'emprise des sondages et des médias sur les décisions politiques. Les gouvernants doivent constamment justifier leurs choix. Risque de dérives populistes.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Effet bandwagon / Effet underdog</div><div class="dd"><strong>Bandwagon :</strong> le candidat en tête des sondages gagne encore plus de soutien. <strong>Underdog :</strong> les électeurs soutiennent le candidat en difficulté par solidarité. Effets opposés et cumulables.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Communication à double étage (Lazarsfeld)</div><div class="dd">Les médias influencent d'abord des "leaders d'opinion" qui, à leur tour, influencent leur entourage. L'influence des médias sur l'opinion est donc indirecte (Two-step flow, 1955).</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Critique de Bourdieu (1973)</div>
+<div class="k"><h4>"L'opinion publique n'existe pas" — 3 arguments</h4><ul><li>(1) <strong>Tout le monde a une opinion</strong> → FAUX : les sondages forcent à se positionner sur des sujets où les individus n'en avaient pas avant</li><li>(2) <strong>Toutes les opinions se valent</strong> → FAUX : l'opinion d'un expert ≠ celle d'un profane</li><li>(3) <strong>Les questions reflètent les préoccupations réelles</strong> → FAUX : elles reflètent les intérêts des commanditaires</li></ul></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Gallup (1936)</div><div class="ed">Invente les sondages modernes en prédisant la réélection de Roosevelt à partir d'un échantillon représentatif. Méthodes encore utilisées aujourd'hui.</div></div>
+<div class="e"><div class="et">Nucléaire — même jour, résultats opposés !</div><div class="ed"><strong>21 mars 2011 :</strong> TNS Sofres pour EDF → 55 % favorables au nucléaire. Ifop pour Europe Écologie → 30 % favorables. Même jour, mêmes Français → formulation des questions change tout.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège</div><div class="wd">Un sondage donne une <strong>ESTIMATION avec marge d'erreur</strong>, pas une vérité. 50 % ± 3 % = on ne sait pas si le candidat gagne ou perd réellement.</div></div>
+</div>
+</div>
+
+<!-- ══ SOC 0 — DÉVIANCE ══ -->
+<div class="ch" id="ch-soc0">
+<span class="badge" style="background:rgba(45,212,191,.1);color:var(--soc)">👥 Sciences Sociales</span>
+<h2 class="title" style="color:var(--soc)">Déviance &amp; Contrôle social</h2>
+<p class="summary">La déviance est la transgression des normes sociales ou juridiques. Elle est construite socialement (Becker, 1963). Le contrôle social (formel + informel) maintient la cohésion. La délinquance est une sous-catégorie de la déviance, difficile à mesurer (chiffre noir).</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Contrôle social</div><div class="dd">Ensemble des moyens par lesquels un groupe fait respecter ses normes. <strong>Formel :</strong> police, justice, école (sanctions codifiées). <strong>Informel :</strong> famille, pairs, regards désapprobateurs (pression sociale quotidienne).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Normes sociales / Normes juridiques</div><div class="dd"><strong>Sociales :</strong> règles implicites d'un groupe (mœurs, habitudes). <strong>Juridiques :</strong> inscrites dans la loi. Varient selon les sociétés et les époques. Les normes juridiques sont des normes sociales sanctionnées par le droit.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Déviance (Becker, Outsiders, 1963)</div><div class="dd">Conduites qu'une société réprouve car jugées non conformes à ses normes. Construction sociale : ce n'est pas une propriété intrinsèque d'un acte — est déviant ce que le groupe désigne comme tel.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Anomie (Durkheim)</div><div class="dd">Dérèglement social dû à l'affaiblissement de l'influence des normes sur les comportements individuels. Favorise la déviance lors des transformations rapides de la société.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Carrière déviante + Étiquetage (Becker)</div><div class="dd">Processus progressif : (1) transgression → (2) étiquetage par le groupe ("déviant") → (3) intégration dans un groupe déviant. L'étiquette peut devenir une prophétie auto-réalisatrice.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Stigmatisation (Goffman, 1963)</div><div class="dd">Processus par lequel un individu, au nom d'un attribut particulier (handicap, orientation sexuelle...), est disqualifié et mis à l'écart. Peut être "retourné" en fierté (Black Power, Pride).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Délinquance / Chiffre noir</div><div class="dd"><strong>Délinquance :</strong> déviances sanctionnées par la loi (contraventions, délits, crimes). <strong>Chiffre noir :</strong> écart entre délinquance réelle et officiellement recensée. <strong>Enquêtes de victimation :</strong> demander à un échantillon s'il a été victime d'infractions → mesure plus réaliste.</div></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Relativité de la déviance</div><div class="ed">Mariage homosexuel = illégal en France avant 2013, maintenant la norme légale. En Iran, toujours illégal. Le même acte est déviant ou non selon le contexte culturel et historique.</div></div>
+<div class="e"><div class="et">Chiffre noir</div><div class="ed">Les violences conjugales sont souvent non déclarées (honte, peur) → fortement sous-estimées dans les statistiques policières. Les enquêtes de victimation révèlent leur ampleur réelle.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège crucial</div><div class="wd"><strong>Déviance ≠ Délinquance :</strong> rater un cours est déviant (norme scolaire) mais pas délinquant (pas illégal). La délinquance est un SOUS-ENSEMBLE de la déviance.</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Anomie ≠ absence totale de normes :</strong> c'est l'affaiblissement et le relâchement des normes, pas leur disparition totale.</div></div>
+</div>
+</div>
+
+<!-- ══ SOC 1 — LIENS SOCIAUX ══ -->
+<div class="ch" id="ch-soc1">
+<span class="badge" style="background:rgba(45,212,191,.1);color:var(--soc)">👥 Sciences Sociales</span>
+<h2 class="title" style="color:var(--soc)">Liens sociaux &amp; Cohésion</h2>
+<p class="summary">Les individus forment des groupes liés par des liens forts ou faibles. La cohésion sociale repose sur la solidarité (mécanique ou organique selon Durkheim). Les mutations économiques fragilisent ces liens et peuvent mener à la désaffiliation (Castel).</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Groupe social</div><div class="dd">Ensemble d'individus liés par des interactions, normes et valeurs communes, et un sentiment d'appartenance collective. ≠ foule (pas d'appartenance) ≠ simple association contractuelle.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Les 4 types de liens (Paugam)</div><div class="dd"><strong>Filiation :</strong> parents-enfants. <strong>Participation élective :</strong> amis, conjoint (liens choisis). <strong>Participation organique :</strong> collègues (emploi). <strong>Citoyenneté :</strong> membres d'une nation (droits + reconnaissance).</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Solidarité mécanique / organique (Durkheim)</div><div class="dd"><strong>Mécanique :</strong> cohésion par ressemblance + forte conscience collective → sociétés traditionnelles. <strong>Organique :</strong> cohésion par interdépendance des individus spécialisés → sociétés industrielles modernes.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Désaffiliation sociale (Castel)</div><div class="dd">Processus progressif d'exclusion par rupture des liens professionnels, familiaux et amicaux. Souvent déclenché par la perte d'emploi → mène à l'exclusion sociale.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">PCS (Catégories socioprofessionnelles)</div><div class="dd">Agrégats statistiques INSEE regroupant les individus selon profession, secteur, statut, qualification. OUTIL STATISTIQUE ≠ groupes sociaux. 8 grandes catégories.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Sociabilité numérique</div><div class="dd">Nouvelles formes de lien social via Internet et réseaux sociaux (Web 2.0). Prolonge les liens existants ET permet de nouveaux groupes en ligne. Contribue à l'intégration et à la cohésion sociale.</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Mécanismes</div>
+<div class="k"><h4>Force des liens faibles (Granovetter, 1974)</h4><p>Paradoxe : les <strong>liens faibles</strong> (connaissances, amis d'amis) sont souvent plus utiles que les liens forts pour trouver un emploi. Ils relient à des cercles sociaux différents → accès à des informations et opportunités nouvelles.</p></div>
+<div class="k"><h4>Facteurs d'affaiblissement du lien social</h4><ul><li><strong>Économiques :</strong> emploi précaire (CDD, intérim), chômage → désaffiliation progressive</li><li><strong>Sociaux :</strong> transformations familiales, isolement des personnes âgées, montée de l'individualisme</li><li><strong>Inégalités :</strong> ségrégation urbaine et scolaire</li></ul></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Castel (1995)</div><div class="ed">"La désaffiliation sociale ou la marginalisation sont des processus cumulatifs de perte de solidarité." Ex : SDF = perte emploi → perte logement → rupture liens familiaux/amicaux → exclusion totale.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>PCS ≠ groupe social :</strong> les PCS sont des constructions statistiques. Tous les ouvriers ne se connaissent pas et ne partagent pas forcément un sentiment d'appartenance commun.</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Exclusion sociale ≠ pauvreté :</strong> on peut être pauvre et très intégré (liens familiaux forts), ou relativement aisé et exclu (isolement social total).</div></div>
+</div>
+</div>
+
+<!-- ══ SOC 2 — SOCIALISATION ══ -->
+<div class="ch" id="ch-soc2">
+<span class="badge" style="background:rgba(45,212,191,.1);color:var(--soc)">👥 Sciences Sociales</span>
+<h2 class="title" style="color:var(--soc)">Socialisation &amp; Comportements</h2>
+<p class="summary">La socialisation est le processus d'acquisition des normes et valeurs d'une société. Différenciée selon le milieu (Bourdieu), le genre (Belotti) et la configuration familiale, elle explique la reproduction sociale. Continue : primaire (enfance) puis secondaire (âge adulte).</p>
+<div class="sec"><div class="sec-h">📖 Définitions</div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Socialisation</div><div class="dd">Processus par lequel l'individu acquiert les normes, valeurs et comportements d'une société. Via la famille, l'école, les pairs, le travail, le couple. Continu tout au long de la vie.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Intériorisation</div><div class="dd">Processus INCONSCIENT par lequel des normes et valeurs acquises deviennent naturelles et semblent innées. La politesse paraît "naturelle" à un adulte bien qu'entièrement apprise.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Socialisation primaire / secondaire</div><div class="dd"><strong>Primaire :</strong> enfance et adolescence, via famille et école. Période fondatrice. <strong>Secondaire :</strong> âge adulte, via travail (professionnelle), couple (conjugale), pairs, médias (politique). Se greffe sur la primaire.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Reproduction sociale (Bourdieu &amp; Passeron, 1970)</div><div class="dd">Les mêmes positions sociales se transmettent entre générations via la socialisation. Les enfants de milieux favorisés maîtrisent mieux les codes scolaires → surreprésentés dans les grandes écoles.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Socialisation différenciée selon le genre (Belotti, 1971)</div><div class="dd">Dès l'enfance, filles et garçons sont traités différemment (jouets, couleurs, attentes). Ces différences construisent socialement des identités de genre → inégalités professionnelles ultérieures.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">Trajectoire improbable</div><div class="dd">Trajectoire qui s'écarte de la trajectoire statistiquement la plus fréquente dans un milieu social donné. Montre que les déterminismes ne sont pas absolus : la mobilité sociale existe.</div></div>
+<div class="d"><div class="dt">Définition</div><div class="dw">L'Homme pluriel (Lahire, 1998)</div><div class="dd">Chaque individu est "pluriel" : fréquentant des groupes aux normes parfois contradictoires, il développe des dispositions multiples. L'identité n'est pas réductible à une seule appartenance.</div></div>
+</div>
+<div class="sec"><div class="sec-h">🔑 Instances de socialisation</div>
+<div class="k"><h4>Les 5 grandes instances</h4><ul><li><strong>Famille :</strong> premières normes, valeurs, langage, rôles de genre</li><li><strong>École :</strong> savoirs scolaires + "savoir-être", culture commune</li><li><strong>Groupe de pairs :</strong> valeurs parfois différentes de la famille, résistance possible</li><li><strong>Travail :</strong> codes professionnels, valeurs du métier (secondaire)</li><li><strong>Couple :</strong> nouvelles habitudes de vie, transformation du mode de vie (secondaire)</li></ul></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Exemples</div>
+<div class="e"><div class="et">Reproduction sociale</div><div class="ed">Enfants de cadres supérieurs surreprésentés dans les grandes écoles (Sciences Po, Polytechnique). La socialisation familiale transmet un "capital culturel" valorisé à l'école alors que l'école est censée être méritocratique.</div></div>
+</div>
+<div class="sec"><div class="sec-h">⚠️ Pièges</div>
+<div class="w"><div class="wt">Piège</div><div class="wd"><strong>Socialisation ≠ déterminisme total.</strong> Les trajectoires improbables existent. L'individu n'est pas passif (Lahire : dispositions multiples et contradictoires).</div></div>
+<div class="w"><div class="wt">Piège</div><div class="wd">En sociologie : <strong>"genre"</strong> (construction sociale) ≠ <strong>"sexe"</strong> (biologique). Les rôles de genre sont appris, pas innés.</div></div>
+</div>
+</div>
+
+<!-- ══ RG 0 — REGARDS CROISÉS ══ -->
+<div class="ch" id="ch-rg0">
+<span class="badge" style="background:rgba(251,191,36,.12);color:var(--rg)">🔗 Regards Croisés</span>
+<h2 class="title" style="color:var(--rg)">Regards Croisés &amp; Auteurs clés</h2>
+<p class="summary">Maîtriser les ponts entre économie, sociologie et sciences politiques + les grands auteurs est indispensable pour la dissertation et l'ECE.</p>
+<div class="sec"><div class="sec-h">🧑‍🏫 Auteurs incontournables</div>
+<div class="g2">
+<div class="k"><h4>Pierre Bourdieu</h4><ul><li><em>La Distinction</em> (1979) : capital culturel, goûts liés au milieu social</li><li><em>La Reproduction</em> (1970, avec Passeron) : reproduction sociale scolaire</li><li>"L'opinion publique n'existe pas" (1973)</li></ul></div>
+<div class="k"><h4>Émile Durkheim</h4><ul><li><em>La Division du travail social</em> (1897) : solidarité mécanique → organique</li><li>Anomie : affaiblissement des normes sociales lors des transformations sociétales</li></ul></div>
+<div class="k"><h4>Howard Becker</h4><ul><li><em>Outsiders</em> (1963) : déviance, étiquetage, carrière déviante</li><li>La déviance est une construction sociale du groupe, pas une propriété de l'acte</li></ul></div>
+<div class="k"><h4>Robert Castel</h4><ul><li><em>Les Métamorphoses de la question sociale</em> (1995)</li><li>Désaffiliation sociale : processus cumulatif de perte de liens</li></ul></div>
+<div class="k"><h4>Paul Lazarsfeld</h4><ul><li>Modèle de Columbia : variables lourdes du vote</li><li>"Un individu pense politiquement comme il est socialement"</li><li>Communication à double étage (Two-step flow, 1955)</li></ul></div>
+<div class="k"><h4>Mark Granovetter</h4><ul><li><em>Getting a Job</em> (1974)</li><li>Force des liens faibles : liens faibles = plus utiles que les forts pour trouver un emploi</li></ul></div>
+<div class="k"><h4>Serge Paugam</h4><ul><li>4 types de liens sociaux : filiation, participation élective, organique, citoyenneté</li><li>Chaque lien apporte protection + reconnaissance</li></ul></div>
+<div class="k"><h4>Bernard Lahire</h4><ul><li><em>L'Homme pluriel</em> (1998)</li><li>L'individu a des dispositions multiples et parfois contradictoires selon ses socialisations</li></ul></div>
+<div class="k"><h4>Erving Goffman</h4><ul><li><em>Stigmate</em> (1963) : stigmatisation et mise à l'écart</li><li>Retournement du stigmate en identité positive</li></ul></div>
+<div class="k"><h4>George Akerlof</h4><ul><li>"The Market for Lemons" (1970)</li><li>Sélection adverse : sur le marché des voitures d'occasion, les mauvaises "chassent" les bonnes</li></ul></div>
+</div>
+</div>
+<div class="sec"><div class="sec-h">🔗 Ponts interdisciplinaires</div>
+<div class="k"><h4>Éco ↔ Socio : Protection sociale et lien social</h4><p>La logique d'assistance (RSA, C2S) maintient les conditions d'une intégration sociale. Elle coupe le processus de désaffiliation (Castel) en garantissant un revenu minimum et accès aux soins.</p></div>
+<div class="k"><h4>Socio ↔ Pol : Socialisation et vote</h4><p>La socialisation politique (famille, milieu) est au cœur du modèle de Columbia. La complexification des identités sociales (Lahire) explique le déclin des variables lourdes et la hausse de la volatilité électorale.</p></div>
+<div class="k"><h4>Éco ↔ Pol : Sondages et asymétries d'information</h4><p>Les commanditaires de sondages ont accès à des études privées → asymétrie d'information entre producteurs et consommateurs d'information électorale (Bourdieu).</p></div>
+<div class="k"><h4>Transversal : Inégalités</h4><ul><li><strong>Éco :</strong> inégalités de revenus, d'accès au financement</li><li><strong>Socio :</strong> inégalités de capital culturel, ségrégation, désaffiliation</li><li><strong>Pol :</strong> inégalités de participation électorale (précaires s'abstiennent plus)</li></ul></div>
+</div>
+<div class="sec"><div class="sec-h">💡 Conseils méthode</div>
+<div class="tp"><div class="tpt">Dissertation</div><div class="tpd">Accroche → Définition des termes → Problématique → Annonce du plan → Développement (2-3 parties avec argument + auteur + exemple + lien) → Conclusion. Montre toujours les dimensions éco + socio + pol.</div></div>
+<div class="tp"><div class="tpt">ECE</div><div class="tpd">Partie 1 = connaissances courtes (définitions précises). Partie 2 = analyser un doc statistique (lecture + interprétation + limites). Partie 3 = mini-dissertation avec docs + connaissances. Toujours définir les mots du sujet en introduction.</div></div>
+</div>
+</div>
+
+</main>
+</div>
+
+<script>
+const CHAPS={
+  eco:['eco0','eco1','eco2','eco3','eco4','eco5'],
+  pol:['pol0','pol1'],
+  soc:['soc0','soc1','soc2'],
+  rg:['rg0']
+};
+const LABELS={
+  eco0:'🛡️ Risques & Protection sociale',
+  eco1:'💰 Financement des agents',
+  eco2:'🏭 Marchés imparfaits',
+  eco3:'💶 Monnaie & Création monétaire',
+  eco4:'📊 Marché concurrentiel',
+  eco5:'⚠️ Défaillances du marché',
+  pol0:'🗳️ Voter : individuel ou collectif ?',
+  pol1:'📣 Opinion publique',
+  soc0:'🚫 Déviance & Contrôle social',
+  soc1:'🤝 Liens sociaux & Cohésion',
+  soc2:'👶 Socialisation',
+  rg0:'🔗 Regards Croisés & Auteurs'
+};
+const COL={eco:'var(--eco)',pol:'var(--pol)',soc:'var(--soc)',rg:'var(--rg)'};
+let CT='eco',CC='eco0';
+
+function buildSB(t){
+  const sb=document.getElementById('sb');
+  sb.innerHTML='<div class="sb-h">'+{eco:'Sciences Économiques',pol:'Sciences Politiques',soc:'Sciences Sociales',rg:'Regards Croisés'}[t]+'</div>';
+  CHAPS[t].forEach(id=>{
+    const a=document.createElement('div');
+    a.className='sb-i'+(id===CC?' on':'');
+    a.id='sbi-'+id;
+    a.style.borderLeftColor=id===CC?COL[t]:'transparent';
+    a.textContent=LABELS[id];
+    a.onclick=()=>go(id);
+    sb.appendChild(a);
+  });
+}
+
+function show(id){
+  document.querySelectorAll('.ch').forEach(c=>c.classList.remove('on'));
+  const el=document.getElementById('ch-'+id);
+  if(el) el.classList.add('on');
+  document.querySelector('main').scrollTop=0;
+  CC=id;
+}
+
+function go(id){
+  const t=id.replace(/\d/g,'');
+  CT=t;
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.nb.'+t).forEach(b=>b.classList.add('on'));
+  buildSB(t);
+  show(id);
+  document.querySelectorAll('.sb-i').forEach(l=>{
+    l.classList.toggle('on',l.id==='sbi-'+id);
+    l.style.borderLeftColor=l.id==='sbi-'+id?COL[t]:'transparent';
+  });
+}
+
+function theme(t,btn){
+  CT=t;
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  buildSB(t);
+  go(CHAPS[t][0]);
+}
+
+buildSB('eco');
+show('eco0');
+document.querySelector('.nb.eco').classList.add('on');
+</script>
+</body>
+</html>
